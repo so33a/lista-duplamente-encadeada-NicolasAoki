@@ -5,6 +5,7 @@
 
 
 
+
 link novoNo (int item, link prev, link next) {
   link aux = malloc(sizeof(struct node));
   if (aux == NULL) {
@@ -90,4 +91,34 @@ void destroiLista(ListaDupla l) {
   free(t);
   free(l);
 }
+
+link buscaMenor(ListaDupla l){
+  link t = l->head;
+  link aux;
+  int menor = t->item;
+  while (t!=NULL) {
+    if((t->item) < menor){
+      menor = t->item;
+      link aux = t;
+    }
+    t = t->next;
+  }
+  return aux;
+}
+
+void ordenaLista(ListaDupla l){
+  link t = l->head;
+  link aux = malloc(sizeof(struct node));
+  
+  while(t->next != NULL){
+   
+   aux = buscaMenor(l); // Guardar o valor num aux
+   t->item = aux->item; // menor item vai para o começo da lista
+   aux->item = t->item; // item atual recebe outro valor
+   
+   l->head = t->next;
+   removeNo(t);
+  }
+}
+
 
